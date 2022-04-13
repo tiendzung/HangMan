@@ -4,11 +4,126 @@
 using namespace std;
 const int mod = 1e9+7;
 const int base = 331;
-
+const int MAX_WRONG_GUESSES = 7;
+const vector<string> WORD_LIST = {"dog", "cat", "human", "apple"};
+const string FIGURE[] = {
+	"   -------------    \n"
+	"   |                \n"
+	"   |                \n"
+	"   |                \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |                \n"
+	"   |                \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |                \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |           |    \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |          /|    \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |          /|\\  \n"
+	"   |                \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |          /|\\  \n"
+	"   |          /     \n"
+	"   |     \n"
+	" -----   \n",
+	"   -------------    \n"
+	"   |           |    \n"
+	"   |           O    \n"
+	"   |          /|\\  \n"
+	"   |          / \\  \n"
+	"   |     \n"
+	" -----   \n"
+};
+const int WORD_ID = WORD_LIST.size();
+int nums[50];
+string chooseW()
+{
+	string s;
+//	s = WORD_LIST[WORD_ID-4];
+	s = "apple";
+	for(int i = 0; i < s.length(); i++)
+	{
+		nums[s[i]-'a']=1;
+	}
+	return s;
+}
+string secretWord = chooseW();
+string guessWord = string(secretWord.length(), '-');
+int wrongGuess = 0;
+char letguess()
+{
+	char c;
+	cout << "Enter the letter: ";
+	cin >> c;
+	return c;
+}
+bool check(string secretWord, char guess)
+{
+	int iguess = guess - 'a';
+	for(int i = 0; i < secretWord.length(); i++)
+	{
+		if(secretWord[i]==guess&&nums[iguess]!=0) { nums[iguess]--; return true; }
+	}
+	return false;
+}
+string update(string guessWord, string secretWord, char guess)
+{
+	for(int i = 0;i < guessWord.length(); i++)
+	{
+		if(guess == secretWord[i]) guessWord[i] = guess;
+	}
+	return guessWord;
+}
+void renderGame(string guessWord, int wrongGuess)
+{
+	cout << FIGURE[wrongGuess];
+	cout << guessWord << "\n";
+	cout << "Number of wrong guesses: "<< wrongGuess << "\n";
+}
 int main()
 {
-	ios_base::sync_with_stdio(false);
-	cin.tie(0); cout.tie(0);
-	
-	
+	srand(time(0));
+	while(wrongGuess != MAX_WRONG_GUESSES && guessWord != secretWord) 
+	{
+		char guess = letguess();
+		if(check(secretWord, guess) == true)
+		{
+			guessWord = update(guessWord, secretWord, guess);
+		}
+		else wrongGuess++;
+		renderGame(guessWord, wrongGuess);
+	}
+//	renderGame(guessWord, wrongGuess);
+	if(wrongGuess != MAX_WRONG_GUESSES) cout << "You're Win!";
+	else cout << "You're Losse! The word is:  "<<secretWord;
 }
