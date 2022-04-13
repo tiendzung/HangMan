@@ -100,7 +100,7 @@ void displayLoose(const string& secretWord)
 	{
 		clearScreen();
 		cout << figureLoose[id] << "\n";
-		cout << "You're Loose! The word is:  "<<secretWord;
+		cout << "You're Loose! The word is:  "<<secretWord<<"\n";
 		this_thread::sleep_for(chrono::milliseconds(500));
 		id = (id+1)%MAX_FL;
 	}
