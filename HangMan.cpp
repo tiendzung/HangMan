@@ -78,7 +78,7 @@ string chooseW()
 	vector<string> WORD_LIST;
 	string s;
 	string line;
-	ifstream myfile ("dataword.txt");
+	ifstream myfile ("Data.txt");
 	if(myfile.is_open())
 	{
 		while(getline(myfile,line))
@@ -90,7 +90,7 @@ string chooseW()
 	const int WORD_ID = WORD_LIST.size();
 	s = WORD_LIST[rand()%WORD_ID];
 //	s = "apple";
-//	cout<< s <<"\n";
+	cout<< s <<"\n";
 	for(int i = 0; i < s.length(); i++)
 	{
 		nums[s[i]-'a']=1;
