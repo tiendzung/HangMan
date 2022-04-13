@@ -115,8 +115,13 @@ string update(string guessWord, string secretWord, char guess)
 	}
 	return guessWord;
 }
+void clearScreen() {
+	const int PATCH_LINES = 30;
+	for (int i = 0; i < PATCH_LINES; i++) cout << endl;
+}
 void renderGame(string guessWord, int wrongGuess)
 {
+	clearScreen();
 	cout << FIGURE[wrongGuess];
 	cout << guessWord << "\n";
 	cout << "Number of wrong guesses: "<< wrongGuess << "\n";
