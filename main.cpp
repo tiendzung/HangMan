@@ -64,6 +64,7 @@ const string FIGURE[] = {
 	" -----   \n"
 };
 int nums[50];
+vector<char> listwrong;
 string chooseW()
 {
 	srand(time(0));
@@ -98,7 +99,7 @@ char letguess()
 	cin >> c;
 	return c;
 }
-bool check(string secretWord, char guess)
+bool check(const string& secretWord, char guess)
 {
 	int iguess = guess - 'a';
 	for(int i = 0; i < secretWord.length(); i++)
@@ -107,13 +108,12 @@ bool check(string secretWord, char guess)
 	}
 	return false;
 }
-string update(string guessWord, string secretWord, char guess)
+void update(string& guessWord,const string& secretWord, char guess)
 {
 	for(int i = 0;i < guessWord.length(); i++)
 	{
 		if(guess == secretWord[i]) guessWord[i] = guess;
 	}
-	return guessWord;
 }
 void clearScreen() {
 	const int PATCH_LINES = 30;
@@ -122,6 +122,9 @@ void clearScreen() {
 void renderGame(string guessWord, int wrongGuess)
 {
 	clearScreen();
+	cout << "Wrong letter: ";
+	for(int i = 0; i < listwrong.size(); i++) cout << listwrong[i] << " ";
+	cout<<"\n\n";
 	cout << FIGURE[wrongGuess];
 	cout << guessWord << "\n";
 	cout << "Number of wrong guesses: "<< wrongGuess << "\n";
@@ -134,9 +137,9 @@ int main()
 		char guess = letguess();
 		if(check(secretWord, guess) == true)
 		{
-			guessWord = update(guessWord, secretWord, guess);
+			update(guessWord, secretWord, guess);
 		}
-		else wrongGuess++;
+		else wrongGuess++, listwrong.push_back(guess);
 		renderGame(guessWord, wrongGuess);
 	}
 //	renderGame(guessWord, wrongGuess);
