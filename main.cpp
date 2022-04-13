@@ -101,7 +101,7 @@ char letguess()
 }
 bool check(const string& secretWord, char guess)
 {
-	int iguess = guess - 'a';
+	int iguess = (guess > 'A') ? (guess - 'A') : (guess - 'a');
 	for(int i = 0; i < secretWord.length(); i++)
 	{
 		if(secretWord[i]==guess&&nums[iguess]!=0) { nums[iguess]--; return true; }
