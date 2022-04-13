@@ -1,4 +1,11 @@
 #include<bits/stdc++.h>
+#include <cstdlib>
+#include <ctime>
+#include <cctype>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+#include "test.h"
 #define ii pair<int,int>
 #define ll long long
 using namespace std;
@@ -83,6 +90,7 @@ string chooseW()
 	const int WORD_ID = WORD_LIST.size();
 	s = WORD_LIST[rand()%WORD_ID];
 //	s = "apple";
+	cout<< s <<"\n";
 	for(int i = 0; i < s.length(); i++)
 	{
 		nums[s[i]-'a']=1;
@@ -101,7 +109,7 @@ char letguess()
 }
 bool check(const string& secretWord, char guess)
 {
-	int iguess = (guess > 'A') ? (guess - 'A') : (guess - 'a');
+	int iguess = (int(guess) - int('a') >= 0) ? (guess - 'a') : (guess - 'A');
 	for(int i = 0; i < secretWord.length(); i++)
 	{
 		if(secretWord[i]==guess&&nums[iguess]!=0) { nums[iguess]--; return true; }
@@ -115,10 +123,10 @@ void update(string& guessWord,const string& secretWord, char guess)
 		if(guess == secretWord[i]) guessWord[i] = guess;
 	}
 }
-void clearScreen() {
-	const int PATCH_LINES = 30;
-	for (int i = 0; i < PATCH_LINES; i++) cout << endl;
-}
+//void clearScreen() {
+//	const int PATCH_LINES = 30;
+//	for (int i = 0; i < PATCH_LINES; i++) cout << endl;
+//}
 void renderGame(string guessWord, int wrongGuess)
 {
 	clearScreen();
@@ -143,6 +151,17 @@ int main()
 		renderGame(guessWord, wrongGuess);
 	}
 //	renderGame(guessWord, wrongGuess);
-	if(wrongGuess != MAX_WRONG_GUESSES) cout << "You're Win!";
-	else cout << "You're Loose! The word is:  "<<secretWord;
+	while(true)
+	{
+		
+		if(wrongGuess != MAX_WRONG_GUESSES) 
+		{
+			displayWon();
+		}
+		else 
+		{
+			displayLoose(secretWord);
+//			cout << "You're Loose! The word is:  "<<secretWord;
+		}
+	}
 }
