@@ -144,5 +144,5 @@ int main()
 	}
 //	renderGame(guessWord, wrongGuess);
 	if(wrongGuess != MAX_WRONG_GUESSES) cout << "You're Win!";
-	else cout << "You're Losse! The word is:  "<<secretWord;
+	else cout << "You're Loose! The word is:  "<<secretWord;
 }
