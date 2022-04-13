@@ -5,7 +5,6 @@ using namespace std;
 const int mod = 1e9+7;
 const int base = 331;
 const int MAX_WRONG_GUESSES = 7;
-const vector<string> WORD_LIST = {"dog", "cat", "human", "apple"};
 const string FIGURE[] = {
 	"   -------------    \n"
 	"   |                \n"
@@ -64,13 +63,25 @@ const string FIGURE[] = {
 	"   |     \n"
 	" -----   \n"
 };
-const int WORD_ID = WORD_LIST.size();
 int nums[50];
 string chooseW()
 {
+	srand(time(0));
+	vector<string> WORD_LIST;
 	string s;
-//	s = WORD_LIST[WORD_ID-4];
-	s = "apple";
+	string line;
+	ifstream myfile ("dataword.txt");
+	if(myfile.is_open())
+	{
+		while(getline(myfile,line))
+		{
+			WORD_LIST.push_back(line);
+		}
+		myfile.close();
+	}
+	const int WORD_ID = WORD_LIST.size();
+	s = WORD_LIST[rand()%WORD_ID];
+//	s = "apple";
 	for(int i = 0; i < s.length(); i++)
 	{
 		nums[s[i]-'a']=1;
